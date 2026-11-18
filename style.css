@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap');
+
+:root {
+  color-scheme: light;
+  --navy: #10233f;
+  --blue: #2864d7;
+  --blue-soft: #edf3ff;
+  --ink: #17243a;
+  --muted: #718096;
+  --line: #e5eaf1;
+  --surface: #ffffff;
+  --page: #f3f6fa;
+  --green: #16845b;
+  font-family: "Noto Sans KR", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); }
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+.topbar {
+  min-height: 76px; padding: 14px max(22px, calc((100% - 1080px) / 2));
+  background: var(--navy); color: white; display: flex; align-items: center;
+  justify-content: space-between; gap: 16px;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-mark {
+  width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
+  background: #fff; color: var(--navy); font-size: 12px; font-weight: 800;
+}
+.brand strong, .brand span { display: block; }
+.brand strong { font-size: 14px; letter-spacing: .08em; }
+.brand span { margin-top: 3px; font-size: 10px; letter-spacing: .16em; color: #b8c6da; }
+.status-pill { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #d9e4f2; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: #f5bd4f; }
+
+.container { width: min(100% - 32px, 820px); margin: 0 auto; }
+.intro { padding: 38px 2px 24px; }
+.eyebrow { margin: 0 0 8px; color: var(--blue); font-size: 10px; font-weight: 800; letter-spacing: .16em; }
+h1 { margin: 0; font-size: clamp(25px, 5vw, 34px); letter-spacing: -.04em; }
+.intro-copy { margin: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+
+.panel {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+  padding: 24px; margin-bottom: 18px; box-shadow: 0 8px 28px rgba(25, 45, 75, .045);
+}
+.section-heading, .route-title-row, .gps-card-head {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+}
+h2 { margin: 0; font-size: 19px; letter-spacing: -.03em; }
+h3 { margin: 0; font-size: 14px; }
+.region-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+.region-button {
+  display: flex; align-items: center; gap: 12px; text-align: left; padding: 14px;
+  border: 1px solid var(--line); border-radius: 14px; background: white; color: var(--ink);
+}
+.region-button.active { border-color: var(--blue); background: var(--blue-soft); box-shadow: inset 0 0 0 1px var(--blue); }
+.region-symbol {
+  width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center;
+  background: #e9eef6; color: var(--navy); font-weight: 800;
+}
+.region-button.active .region-symbol { background: var(--blue); color: white; }
+.region-button strong, .region-button small { display: block; }
+.region-button strong { font-size: 14px; }
+.region-button small { margin-top: 2px; color: var(--muted); font-size: 10px; }
+.field-block { margin-top: 26px; }
+label, .small-label { display: block; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .1em; margin-bottom: 9px; }
+.search-row { display: flex; gap: 8px; }
+input {
+  min-width: 0; flex: 1; height: 46px; padding: 0 13px; border: 1px solid var(--line);
+  border-radius: 11px; outline: none; color: var(--ink); background: white;
+}
+input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(40,100,215,.1); }
+.primary-button, .secondary-button {
+  min-height: 44px; padding: 0 18px; border-radius: 11px; font-size: 12px; font-weight: 700;
+}
+.primary-button { border: 1px solid var(--blue); background: var(--blue); color: white; }
+.primary-button:hover { background: #1e54bd; }
+.secondary-button { border: 1px solid var(--line); background: white; color: var(--ink); }
+.secondary-button:disabled { opacity: .4; cursor: not-allowed; }
+.helper, .notice { color: var(--muted); font-size: 11px; line-height: 1.65; }
+.helper { margin: 8px 0 0; }
+.route-area { margin-top: 25px; }
+.muted-label { color: var(--muted); font-size: 10px; }
+.route-list { display: grid; gap: 8px; margin-top: 12px; }
+.route-option {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 11px 13px;
+  border: 1px solid var(--line); border-radius: 12px; background: white; text-align: left;
+}
+.route-option.selected { border-color: var(--blue); background: #f7f9ff; }
+.route-number { min-width: 46px; color: var(--blue); font-weight: 800; font-size: 16px; }
+.route-description { color: var(--muted); font-size: 11px; }
+.chevron { margin-left: auto; color: #9aa7b8; font-size: 22px; }
+.empty-state { color: var(--muted); font-size: 12px; padding: 16px 0; }
+.region-badge { padding: 6px 10px; border-radius: 30px; background: var(--blue-soft); color: var(--blue); font-size: 11px; font-weight: 700; }
+.selected-route {
+  display: flex; align-items: center; justify-content: space-between; margin-top: 18px;
+  padding: 15px; background: #f7f9fc; border-radius: 13px;
+}
+.selected-route .small-label { margin-bottom: 4px; }
+.selected-route strong { font-size: 16px; }
+.route-icon { color: var(--blue); font-size: 23px; }
+.gps-card { margin-top: 12px; border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+.gps-card-head strong { display: block; font-size: 14px; }
+.gps-card-head .small-label { margin-bottom: 5px; }
+.gps-icon { font-size: 27px; color: var(--green); }
+.coordinates { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding-top: 16px; margin-top: 14px; border-top: 1px solid var(--line); }
+.coordinates span, .coordinates strong { display: block; }
+.coordinates span { color: var(--muted); font-size: 10px; }
+.coordinates strong { margin-top: 5px; font-size: 12px; font-variant-numeric: tabular-nums; }
+.action-row { display: flex; gap: 9px; margin-top: 13px; }
+.action-row > button { flex: 1; }
+.action-row .wide { width: 100%; }
+.notice { margin: 12px 0 0; }
+footer { display: flex; justify-content: space-between; gap: 12px; padding: 18px 2px 32px; color: #8a97a8; font-size: 10px; }
+
+@media (max-width: 560px) {
+  .topbar { padding: 13px 16px; }
+  .status-pill { font-size: 10px; }
+  .container { width: min(100% - 24px, 820px); }
+  .intro { padding-top: 29px; }
+  .panel { padding: 18px; border-radius: 16px; }
+  .region-button { padding: 11px 9px; gap: 8px; }
+  .region-symbol { width: 32px; height: 32px; }
+  .coordinates { gap: 4px; }
+  .coordinates strong { font-size: 10px; }
+  footer { flex-direction: column; }
+}

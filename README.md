@@ -1,2 +1,26 @@
-# bus-pa-system
-Seoul &amp; Incheon Bus GPS Automatic Announcement System
+# BUS PA SYSTEM
+
+서울·인천 시내버스용 스마트폰 GPS 기반 자동 안내방송 웹앱의 초기 화면 시제품입니다.
+
+## 현재 포함된 기능
+- 서울 / 인천 지역 선택
+- 예시 노선 검색 및 선택
+- 스마트폰 GPS 위치 권한 요청 및 좌표 표시
+- 브라우저 음성 합성 테스트
+
+## 아직 연결되지 않은 기능
+- 실제 서울·인천 전체 노선 및 정류장 데이터
+- 정류장별 GPS 좌표와 자동 도착 판정
+- 지역별 공통 MP3 음원
+- 한국어 정류장 이름용 혜련 TTS
+- 영어 정류장 이름용 Fish Audio Jennifer
+- 서버 및 음원 캐시
+
+## GitHub Pages 배포
+1. 저장소 루트에 `index.html`, `style.css`, `app.js`를 업로드합니다.
+2. GitHub 저장소의 **Settings → Pages**로 이동합니다.
+3. **Deploy from a branch**를 선택합니다.
+4. Branch는 `main`, folder는 `/ (root)`로 지정하고 저장합니다.
+5. 배포가 완료되면 표시되는 주소로 접속합니다.
+
+GPS는 HTTPS 환경에서 위치 권한을 허용해야 사용할 수 있습니다. 실제 버스 운행 중 자동 방송은 노선·정류장 데이터와 서버 및 음원 연결을 완료한 뒤 테스트해야 합니다.

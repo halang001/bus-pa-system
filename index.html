@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#10233f">
+  <title>BUS PA SYSTEM</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">BUS</div>
+      <div>
+        <strong>BUS PA SYSTEM</strong>
+        <span>SEOUL · INCHEON</span>
+      </div>
+    </div>
+    <div class="status-pill" id="gpsStatus"><span class="status-dot"></span> GPS 대기 중</div>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <p class="eyebrow">AUTOMATIC ANNOUNCEMENT</p>
+      <h1>버스 안내방송 시스템</h1>
+      <p class="intro-copy">지역과 노선을 선택하고 스마트폰 GPS를 연결해 자동 안내방송을 준비하세요.</p>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">01 · SERVICE AREA</p>
+          <h2>운행 지역 선택</h2>
+        </div>
+      </div>
+      <div class="region-switch" role="group" aria-label="운행 지역">
+        <button class="region-button active" data-region="seoul" type="button">
+          <span class="region-symbol">S</span>
+          <span><strong>서울</strong><small>서울특별시</small></span>
+        </button>
+        <button class="region-button" data-region="incheon" type="button">
+          <span class="region-symbol">I</span>
+          <span><strong>인천</strong><small>인천광역시</small></span>
+        </button>
+      </div>
+
+      <div class="field-block">
+        <label for="routeSearch">02 · ROUTE SEARCH</label>
+        <div class="search-row">
+          <input id="routeSearch" type="search" placeholder="노선번호를 입력하세요 (예: 143)" autocomplete="off">
+          <button id="searchButton" class="primary-button" type="button">검색</button>
+        </div>
+        <p class="helper">현재는 화면 시연용 예시 노선만 표시됩니다. 실제 서울·인천 노선 데이터는 다음 단계에서 연결합니다.</p>
+      </div>
+
+      <div class="route-area">
+        <div class="route-title-row">
+          <h3>노선 목록</h3>
+          <span id="regionLabel" class="muted-label">서울 노선 예시</span>
+        </div>
+        <div id="routeList" class="route-list">
+          <button class="route-option" type="button" data-route="143"><span class="route-number">143</span><span class="route-description">서울 간선버스 · 예시</span><span class="chevron">›</span></button>
+          <button class="route-option" type="button" data-route="150"><span class="route-number">150</span><span class="route-description">서울 간선버스 · 예시</span><span class="chevron">›</span></button>
+          <button class="route-option" type="button" data-route="160"><span class="route-number">160</span><span class="route-description">서울 간선버스 · 예시</span><span class="chevron">›</span></button>
+        </div>
+        <p id="noRoutes" class="empty-state" hidden>검색 결과가 없습니다. 노선번호를 확인해 주세요.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">03 · SELECTED SERVICE</p>
+          <h2>운행 및 GPS 상태</h2>
+        </div>
+        <span id="selectedRegionBadge" class="region-badge">서울</span>
+      </div>
+
+      <div class="selected-route">
+        <div>
+          <span class="small-label">선택한 노선</span>
+          <strong id="selectedRoute">노선을 선택해 주세요</strong>
+        </div>
+        <span class="route-icon">↗</span>
+      </div>
+
+      <div class="gps-card">
+        <div class="gps-card-head">
+          <div>
+            <span class="small-label">스마트폰 GPS</span>
+            <strong id="gpsText">위치 확인 전</strong>
+          </div>
+          <span class="gps-icon">◎</span>
+        </div>
+        <div class="coordinates">
+          <div><span>위도</span><strong id="latitude">--</strong></div>
+          <div><span>경도</span><strong id="longitude">--</strong></div>
+          <div><span>정확도</span><strong id="accuracy">--</strong></div>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button id="gpsStart" class="primary-button" type="button">GPS 연결</button>
+        <button id="gpsStop" class="secondary-button" type="button" disabled>GPS 중지</button>
+      </div>
+      <div class="action-row">
+        <button id="testSound" class="secondary-button wide" type="button">안내방송 테스트</button>
+      </div>
+      <p class="notice">안내방송 테스트는 현재 브라우저의 기본 음성 합성으로 동작하는 임시 기능입니다. 혜련 TTS 및 Fish Audio Jennifer, 지역별 MP3는 API·음원 연결 단계에서 적용합니다.</p>
+    </section>
+
+    <footer>
+      <span>BUS PA SYSTEM</span>
+      <span>GPS 기반 자동 안내방송 · 초기 화면 시제품</span>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
