@@ -1,53 +1,79 @@
-const sampleRoutes = {
-  seoul: [
-    { number: "143", description: "서울 간선버스 · 예시" },
-    { number: "150", description: "서울 간선버스 · 예시" },
-    { number: "160", description: "서울 간선버스 · 예시" }
-  ],
-  incheon: [
-    { number: "12", description: "인천 간선버스 · 예시" },
-    { number: "24", description: "인천 간선버스 · 예시" },
-    { number: "46", description: "인천 간선버스 · 예시" }
-  ]
-};
-
+// 서울시 공식 노선 데이터(routes.json)를 불러오는 버전
+let routeData = { seoul: [], incheon: [] };
 let selectedRegion = "seoul";
 let selectedRoute = "";
+let selectedRouteData = null;
 let watchId = null;
 
 const $ = (id) => document.getElementById(id);
 const regionNames = { seoul: "서울", incheon: "인천" };
 
+async function loadRouteData() {
+  $("regionLabel").textContent = "서울 노선 데이터를 불러오는 중...";
+  try {
+    const response = await fetch("./routes.json", { cache: "no-store" });
+    if (!response.ok) throw new Error(`routes.json 응답 오류: ${response.status}`);
+    const data = await response.json();
+    if (!Array.isArray(data.routes)) throw new Error("노선 데이터 형식이 올바르지 않습니다.");
+    routeData.seoul = data.routes;
+    renderRoutes($("routeSearch").value);
+    $("regionLabel").textContent = `서울 노선 ${data.routeCount || data.routes.length}개`;
+  } catch (error) {
+    console.error(error);
+    $("routeList").innerHTML = "";
+    $("noRoutes").hidden = false;
+    $("noRoutes").textContent = "노선 데이터를 불러오지 못했습니다. routes.json 파일이 사이트 최상위 폴더에 있는지 확인해 주세요.";
+    $("regionLabel").textContent = "노선 데이터 오류";
+  }
+}
+
 function renderRoutes(filter = "") {
-  const routes = sampleRoutes[selectedRegion].filter(route =>
+  const routes = (routeData[selectedRegion] || []).filter(route =>
     route.number.toLowerCase().includes(filter.trim().toLowerCase())
   );
   $("routeList").innerHTML = "";
   $("noRoutes").hidden = routes.length > 0;
+  $("noRoutes").textContent = selectedRegion === "incheon"
+    ? "인천 노선 데이터는 서울 노선 추가 후 연결할 예정입니다."
+    : "검색 결과가 없습니다.";
+
   routes.forEach(route => {
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "route-option" + (selectedRoute === route.number ? " selected" : "");
-    button.dataset.route = route.number;
-    button.innerHTML = `<span class="route-number"></span><span class="route-description"></span><span class="chevron">›</span>`;
-    button.querySelector(".route-number").textContent = route.number;
-    button.querySelector(".route-description").textContent = route.description;
-    button.addEventListener("click", () => chooseRoute(route.number));
+    button.className = "route-option" + (selectedRoute === route.routeId ? " selected" : "");
+    button.dataset.routeId = route.routeId;
+    const number = document.createElement("span");
+    number.className = "route-number";
+    number.textContent = route.number;
+    const description = document.createElement("span");
+    description.className = "route-description";
+    description.textContent = `${route.description} · 정류장 ${route.stops.length}개`;
+    const chevron = document.createElement("span");
+    chevron.className = "chevron";
+    chevron.textContent = "›";
+    button.append(number, description, chevron);
+    button.addEventListener("click", () => chooseRoute(route.routeId));
     $("routeList").appendChild(button);
   });
-  $("regionLabel").textContent = `${regionNames[selectedRegion]} 노선 예시`;
+  $("regionLabel").textContent = selectedRegion === "seoul"
+    ? `서울 노선 ${routeData.seoul.length}개`
+    : "인천 노선 (추가 예정)";
 }
 
-function chooseRoute(number) {
-  selectedRoute = number;
-  $("selectedRoute").textContent = `${regionNames[selectedRegion]} ${number}번`;
+function chooseRoute(routeId) {
+  selectedRouteData = (routeData[selectedRegion] || []).find(route => route.routeId === routeId) || null;
+  if (!selectedRouteData) return;
+  selectedRoute = routeId;
+  $("selectedRoute").textContent = `${regionNames[selectedRegion]} ${selectedRouteData.number}번`;
   renderRoutes($("routeSearch").value);
+  console.log("선택 노선 정류장 데이터:", selectedRouteData.stops);
 }
 
 document.querySelectorAll(".region-button").forEach(button => {
   button.addEventListener("click", () => {
     selectedRegion = button.dataset.region;
     selectedRoute = "";
+    selectedRouteData = null;
     document.querySelectorAll(".region-button").forEach(item =>
       item.classList.toggle("active", item === button)
     );
@@ -84,7 +110,7 @@ function gpsError(error) {
 }
 
 $("gpsStart").addEventListener("click", () => {
-  if (!selectedRoute) {
+  if (!selectedRouteData) {
     alert("먼저 지역과 노선을 선택해 주세요.");
     return;
   }
@@ -99,9 +125,7 @@ $("gpsStart").addEventListener("click", () => {
   if (watchId !== null) navigator.geolocation.clearWatch(watchId);
   $("gpsText").textContent = "GPS 연결을 요청했습니다.";
   watchId = navigator.geolocation.watchPosition(updateGps, gpsError, {
-    enableHighAccuracy: true,
-    maximumAge: 1000,
-    timeout: 15000
+    enableHighAccuracy: true, maximumAge: 1000, timeout: 15000
   });
   $("gpsStart").disabled = true;
   $("gpsStop").disabled = false;
@@ -132,4 +156,4 @@ $("testSound").addEventListener("click", () => {
   window.speechSynthesis.speak(utterance);
 });
 
-renderRoutes();
+loadRouteData();
